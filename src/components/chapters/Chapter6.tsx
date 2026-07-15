@@ -160,7 +160,7 @@ export default function Chapter6({ onNext }: Chapter6Props) {
 
         {/* Floating Bubble Layout (CSS Grid/Flex) */}
         {isCompleted ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 w-full max-w-4xl justify-items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 md:gap-10 w-full max-w-4xl justify-items-center">
             {memoriesList.map((memory, index) => {
               const isVisited = visitedMemories.includes(memory.id);
               return (
@@ -168,7 +168,7 @@ export default function Chapter6({ onNext }: Chapter6Props) {
                   key={memory.id}
                   onClick={() => handleBubbleClick(memory)}
                   whileHover={{ scale: 1.06 }}
-                  className={`relative w-28 h-28 sm:w-36 sm:h-36 rounded-full flex flex-col items-center justify-center cursor-pointer border border-white/10 shadow-2xl backdrop-blur-md bg-gradient-to-br ${memory.color} transition-all duration-300 hover:border-white/40 ${
+                  className={`relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full flex flex-col items-center justify-center cursor-pointer border border-white/10 shadow-2xl backdrop-blur-md bg-gradient-to-br ${memory.color} transition-all duration-300 hover:border-white/40 ${
                     isVisited ? "shadow-[#FFD166]/10 border-[#FFD166]/30" : ""
                   }`}
                   style={{
@@ -180,8 +180,8 @@ export default function Chapter6({ onNext }: Chapter6Props) {
                   {/* Glass highlights */}
                   <div className="absolute top-2 left-4 w-6 h-3 bg-white/25 rounded-full blur-[1px] rotate-[-15deg]"></div>
                   
-                  <span className="text-2xl sm:text-4xl mb-1.5">{memory.emoji}</span>
-                  <span className="font-serif text-[10px] sm:text-xs text-center font-semibold text-white/80 max-w-[85%] leading-tight truncate">
+                  <span className="text-xl sm:text-3xl mb-1">{memory.emoji}</span>
+                  <span className="font-serif text-[9px] sm:text-xs text-center font-semibold text-white/80 max-w-[85%] leading-tight truncate">
                     {memory.title}
                   </span>
 
@@ -216,7 +216,7 @@ export default function Chapter6({ onNext }: Chapter6Props) {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="bg-[#FFFDF8] text-[#6F4E37] w-full max-w-md rounded-2xl p-6 shadow-2xl relative border-y-[6px] border-[#FFD166] flex flex-col items-center text-center"
+              className="bg-[#FFFDF8] text-[#6F4E37] w-full max-w-xs sm:max-w-md rounded-2xl p-4 sm:p-6 shadow-2xl relative border-y-[6px] border-[#FFD166] flex flex-col items-center text-center"
             >
               <button 
                 onClick={() => setActiveMemory(null)}
@@ -225,27 +225,27 @@ export default function Chapter6({ onNext }: Chapter6Props) {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="w-full h-44 rounded-lg overflow-hidden mb-4 border border-[#6F4E37]/10 relative shadow-inner">
+              <div className="w-full h-32 sm:h-44 rounded-lg overflow-hidden mb-3 sm:mb-4 border border-[#6F4E37]/10 relative shadow-inner">
                 <img src="/deephi.jpg" alt="Memory" className="w-full h-full object-cover" />
                 <div className="absolute bottom-2 right-2 bg-black/45 backdrop-blur-sm text-white px-2 py-0.5 rounded text-[10px] font-sans tracking-widest uppercase">
                   Memory Photo
                 </div>
               </div>
 
-              <div className="text-3xl mb-2 flex items-center justify-center gap-2">
+              <div className="text-2xl mb-1 flex items-center justify-center gap-2">
                 <span>{activeMemory.emoji}</span>
-                <span className="font-serif text-lg font-bold tracking-wide text-[#6F4E37]">{activeMemory.title}</span>
+                <span className="font-serif text-base sm:text-lg font-bold tracking-wide text-[#6F4E37]">{activeMemory.title}</span>
               </div>
               
               <div className="w-12 h-[1px] bg-[#6F4E37]/20 my-3"></div>
               
-              <p className="font-cormorant text-base md:text-lg leading-relaxed text-[#6F4E37]/90 px-2 italic">
+              <p className="font-cormorant text-sm sm:text-base md:text-lg leading-relaxed text-[#6F4E37]/90 px-2 italic">
                 "{activeMemory.description}"
               </p>
 
               <button
                 onClick={() => setActiveMemory(null)}
-                className="mt-6 px-6 py-2 bg-[#6F4E37] text-[#FFFDF8] rounded-full text-xs font-sans tracking-widest uppercase hover:bg-[#483424] transition-all cursor-pointer shadow-md"
+                className="mt-4 sm:mt-6 px-6 py-2 bg-[#6F4E37] text-[#FFFDF8] rounded-full text-xs font-sans tracking-widest uppercase hover:bg-[#483424] transition-all cursor-pointer shadow-md"
               >
                 Close Memory
               </button>
