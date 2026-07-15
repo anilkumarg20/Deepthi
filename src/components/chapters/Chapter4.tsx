@@ -82,7 +82,7 @@ export default function Chapter4({ onNext }: Chapter4Props) {
       // Add "Searching" log
       setSearchLogs(prev => [
         { id: logId, platform, query: "Cousin (Mardal)", status: "searching" },
-        ...prev.slice(0, 4) // cap at 5 logs
+        ...prev.slice(0, typeof window !== "undefined" && window.innerWidth < 640 ? 1 : 3) // show fewer logs on mobile
       ]);
 
       // Set to "Failed" after 800ms
@@ -142,11 +142,11 @@ export default function Chapter4({ onNext }: Chapter4Props) {
       </div>
 
       {/* Main clock and search display panel */}
-      <div className="chapter4-content relative flex-1 w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center justify-items-center px-8 z-10">
+      <div className="chapter4-content relative flex-1 w-full max-w-4xl mx-auto flex flex-row md:grid md:grid-cols-2 gap-3 sm:gap-6 md:gap-8 items-center justify-center px-4 sm:px-8 z-10">
         
         {/* Left Side: Vintage Spinning Clock & Calendar Page */}
-        <div className="flex flex-col items-center gap-4 sm:gap-6">
-          <div className="relative w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 rounded-full border-4 border-[#FFFDF8]/20 bg-[#060913]/40 flex items-center justify-center shadow-2xl">
+        <div className="flex flex-col items-center gap-3 sm:gap-6">
+          <div className="relative w-24 h-24 sm:w-44 sm:h-44 md:w-56 md:h-56 rounded-full border-4 border-[#FFFDF8]/20 bg-[#060913]/40 flex items-center justify-center shadow-2xl">
             {/* Clock ticks/marks */}
             <div className="absolute inset-2 border border-[#FFFDF8]/5 rounded-full"></div>
             
@@ -186,7 +186,7 @@ export default function Chapter4({ onNext }: Chapter4Props) {
         </div>
 
         {/* Right Side: Mock Social Media Searches */}
-        <div className="w-full max-w-[320px] sm:max-w-[360px] bg-[#060913]/60 border border-[#FFFDF8]/10 rounded-xl p-4 sm:p-5 shadow-2xl min-h-[180px] sm:min-h-[220px] flex flex-col justify-between">
+        <div className="w-[180px] sm:w-full max-w-[320px] sm:max-w-[360px] bg-[#060913]/60 border border-[#FFFDF8]/10 rounded-xl p-3 sm:p-5 shadow-2xl min-h-[150px] sm:min-h-[220px] flex flex-col justify-between">
           <div className="flex items-center gap-2 border-b border-[#FFFDF8]/10 pb-2 sm:pb-3 mb-2 sm:mb-3 text-[#FFFDF8]">
             <Search className="w-4 h-4 text-[#7C5CFC]" />
             <span className="font-sans text-xs tracking-wider uppercase font-semibold">Social Registry Logs</span>
@@ -289,28 +289,28 @@ export default function Chapter4({ onNext }: Chapter4Props) {
       <style jsx>{`
         @media (max-height: 700px) {
           .chapter4-content {
-            gap: 0.75rem !important;
+            gap: 0.5rem !important;
           }
-          .min-h-\\[180px\\] {
-            min-height: 140px !important;
+          .min-h-\\[150px\\] {
+            min-height: 120px !important;
           }
           .py-1\\.5 {
-            padding-top: 0.25rem !important;
-            padding-bottom: 0.25rem !important;
+            padding-top: 0.15rem !important;
+            padding-bottom: 0.15rem !important;
           }
         }
         @media (max-height: 600px) {
           .chapter4-content {
             transform: scale(0.85);
-            margin-top: -15px;
-            margin-bottom: -15px;
+            margin-top: -10px;
+            margin-bottom: -10px;
           }
         }
         @media (max-height: 500px) {
           .chapter4-content {
-            transform: scale(0.68);
-            margin-top: -25px;
-            margin-bottom: -25px;
+            transform: scale(0.7);
+            margin-top: -20px;
+            margin-bottom: -20px;
           }
         }
       `}</style>
