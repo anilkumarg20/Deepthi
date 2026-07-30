@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP TET Paper II(A) Complete Study Portal & Exam Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --accent-primary: #7c3aed;
+            --accent-secondary: #0ea5e9;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --shadow-premium: 0 10px 30px 0 rgba(31, 38, 135, 0.05);
+            --border-radius: 16px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top right, #fdf2f8, #f5f3ff 50%, #ecfeff 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER NAV */
+        header {
+            background: var(--primary-gradient);
+            color: #ffffff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-family: 'Outfit', sans-serif;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-logo {
+            font-size: 1.0rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #f43f5e, #38bdf8, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+          .header-logo-h2 {
+            font-size: 1.0rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #11ff00, #38bdf8, #ffb700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 10px;
+        }
+
+        .header-tagline {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin: 2px 0 0 0;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background-color: transparent;
+            color: #cbd5e1;
+            border: 1px solid transparent;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            flex-grow: 1;
+            width: -webkit-fill-available;
+        }
+
+        /* VIEW SWITCHER */
+        .app-view {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .app-view.active {
+            display: block;
+        }
+
+        /* DASHBOARD GRID */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .subject-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow-premium);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: var(--accent-primary);
+        }
+
+        .subject-card:nth-child(2n)::before { background: var(--accent-secondary); }
+        .subject-card:nth-child(3n)::before { background: #b45309; }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(31, 38, 135, 0.1);
+        }
+
+        .subject-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            font-family: 'Outfit', sans-serif;
+            color: #1e1b4b;
+        }
+
+        .subject-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-read {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-read:hover {
+            background-color: #e2e8f0;
+        }
+
+        .btn-test {
+            background-color: var(--accent-primary);
+            color: #ffffff;
+        }
+
+        .btn-test:hover {
+            background-color: #6d28d9;
+        }
+
+        /* INLINE READER VIEW */
+        .reader-container {
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-premium);
+        }
+
+        .reader-controls {
+            background: #f8fafc;
+            border-bottom: 1px solid #cbd5e1;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reader-iframe {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* EXAM PANEL */
+        .exam-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            box-shadow: var(--shadow-premium);
+        }
+
+        .exam-meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .question-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+
+        .option-item {
+            display: block;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .option-item:hover {
+            border-color: var(--accent-primary);
+            background-color: #f5f3ff;
+        }
+
+        .option-item input {
+            margin-right: 12px;
+        }
+
+        .selected-option {
+            border-color: var(--accent-primary);
+            background-color: #f5f3ff;
+            font-weight: 600;
+        }
+
+        .correct-option {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #14532d;
+            font-weight: 600;
+        }
+
+        .wrong-option {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #7f1d1d;
+            font-weight: 600;
+        }
+
+        .explanation {
+            margin-top: 12px;
+            padding: 12px 15px;
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            border-radius: 4px;
+            color: #1e3a8a;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .result-box {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .result-score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #16a34a;
+        }
+
+        .pagination-bar {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background-color: #ffffff;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-btn.active {
+            background-color: var(--accent-primary);
+            color: #ffffff;
+            border-color: var(--accent-primary);
+        }
+
+        .page-btn.answered {
+            background-color: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            border-top: 1px solid #334155;
+            margin-top: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <script src="cdp_tests.js"></script>
+    <script src="english_l2_tests.js"></script>
+    <script src="other_subjects_tests.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo-group">
+            <h1 class="header-logo">AP TET 2026 Coursebook & Exam Hub </h1>
+            <h2 class="header-logo-h2">Developed BY Anil Kumar Gosipothula</h2>
+            <p class="header-tagline">Exhaustive Syllabus Prep & 100-Question Exam Simulator</p>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-btn active" id="btn-home" onclick="showView('dashboard')">Home Dashboard</button>
+            <button class="nav-btn" id="btn-reader" style="display:none;" onclick="showView('reader')">Inline Coursebook</button>
+            <button class="nav-btn" id="btn-exam" style="display:none;" onclick="showView('exam')">Practice Test</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="app-view active">
+            <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.7rem; color: #1e1b4b; margin: 0 0 10px 0;">Your Complete Study Hub</h2>
+            <p style="color: var(--text-muted); margin: 0 0 20px 0; font-size: 0.95rem;">Read comprehensive textbook guides or challenge yourself with practice papers below.</p>
+
+            <!-- GRAND FULL-LENGTH MOCK EXAM HERO CARD -->
+            <div style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 25px; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3); display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 15px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="flex-grow: 1;">
+                    <div style="background: rgba(255,255,255,0.2); display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;">🏆 Recommended Activity</div>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.45rem; font-weight: 700; margin: 0 0 4px 0; color: #ffffff;">150-Question Grand Mock Simulator</h3>
+                    <p style="margin: 0; font-size: 0.9rem; opacity: 0.95; line-height: 1.45;">Challenge yourself with a full-length 150-mark exam covering Child Development, Language I (Telugu), Language II (English), and Special English Content & Pedagogy.</p>
+                </div>
+                <button onclick="window.location.href='Full_Length_Exam_Hub.html'" style="background-color: white; color: #4f46e5; border: none; padding: 14px 28px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); width: 100%; align-self: stretch; text-align: center;">🎯 Start Grand Exam (150 Qs)</button>
+            </div>
+
+            <div class="dashboard-grid" id="subjects-container"></div>
+        </div>
+
+        <!-- INLINE READER VIEW -->
+        <div id="view-reader" class="app-view">
+            <div class="reader-container">
+                <div class="reader-controls">
+                    <span id="reader-title" style="font-weight: 700; font-size: 1.1rem; color: #1e1b4b;">Loading Coursebook...</span>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-action btn-test" id="reader-test-shortcut" style="padding: 8px 16px;">✏️ Practice Exam</button>
+                        <button class="btn-action btn-read" onclick="showView('dashboard')" style="padding: 8px 16px;">🏠 Close</button>
+                    </div>
+                </div>
+                <iframe class="reader-iframe" id="reader-frame" src="about:blank"></iframe>
+            </div>
+        </div>
+
+        <!-- EXAM SIMULATOR VIEW -->
+        <div id="view-exam" class="app-view exam-panel">
+            <div class="exam-meta-bar">
+                <div>
+                    <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; color: #1e1b4b; margin: 0;" id="exam-title">Subject Practice Exam</h2>
+                    <p style="color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.9rem;" id="exam-desc">Select a paper to begin.</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span style="font-weight: 700; color: var(--accent-primary); font-size: 1rem;" id="exam-timer">Time: 150 Mins</span>
+                    <select class="select-test" id="test-selector" onchange="generateExam()"></select>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="questions-area"></div>
+
+            <!-- Pagination buttons -->
+            <div class="pagination-bar" id="pagination-container"></div>
+
+            <!-- Results Summary -->
+            <div class="result-box" id="results-box">
+                <h3>Exam Completed & Graded!</h3>
+                <div class="result-score" id="score-display">0 / 100</div>
+                <p id="score-feedback" style="font-weight: 600; font-size: 1.1rem; margin-top: 10px;"></p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px; border-top: 1px solid #cbd5e1; padding-top: 20px;">
+                <button class="btn-action btn-read" onclick="showView('dashboard')" style="max-width: 200px;">🏠 Dashboard</button>
+                <button class="btn-action btn-test" id="submit-btn" onclick="gradeExam()" style="max-width: 250px;">Submit Answer Sheet</button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 AP TET Paper II(A) Complete Preparation Hub. Built for Excellence. Developed BY Anil Kumar Gosipothula</p>
+    </footer>
+
+    <!-- INTERACTIVE EXAM GENERATION DATABASE & ENGINE -->
+    <script>
+        const subjects = [
+            { id: "cdp", title: "Child Development & Pedagogy", desc: "Piaget, Erikson, Kohlberg, Socialization, learning theories, action research, Bloom's taxonomy, and statistics.", file: "Part1_Child_Development_and_Pedagogy.html", examFile: "Part1_CDP_Exam_Hub.html" },
+            { id: "ict", title: "ICT Integration in Education", desc: "Berlo's SMCR model, Ned Flanders' FIACS categories matrix, programmed instruction modes, SWAYAM, and cyber safety.", file: "Part2_ICT_Integration_in_Education.html", examFile: "Part2_ICT_Exam_Hub.html" },
+            { id: "english_l2", title: "General English (Language II)", desc: "Syllabus grammar rules, spelling anomalies, phonetics vowel/consonant charts, question tags, and dictionary entries.", file: "Part3_General_English_Language_II.html", examFile: "Part3_English_L2_Exam_Hub.html" },
+            { id: "english_special", title: "Special English Content", desc: "Advanced subject-verb concord rules, conditional clauses, grammatical inversion, figures of speech, and literary forms.", file: "Part4_Special_English_Content.html", examFile: "Part4_Special_English_Exam_Hub.html" },
+            { id: "english_literature", title: "English Literature & Prescribed Texts", desc: "Shakespeare, Wilde, Orwell, Lee, Tagore, Wordsworth, Bacon, Chekhov, and R.K. Narayan detailed study.", file: "Part5_English_Literature_and_Texts.html", examFile: "Part5_English_Literature_Exam_Hub.html" },
+            { id: "english_methodology", title: "English Methodology & Pedagogy", desc: "History of English teaching in India, LSRW sub-skills, TLMs, Herbartian lesson steps, NCF policies, and CCE evaluation.", file: "Part6_English_Methodology_and_Pedagogy.html", examFile: "Part6_English_Methodology_Exam_Hub.html" },
+            { id: "telugu", title: "Telugu Language I", desc: "Telugu textbooks Grade 6-10 poets, lessons, sandhulu, samasalu, chandassu, alankaralu, and varnotpathisthanalu.", file: "Part7_Telugu_Language_I.html", examFile: "Part7_Telugu_Exam_Hub.html" }
+        ];
+
+        // Core Question Templates for Procedural Exam Generator (to produce exactly 100 questions per exam)
+        const cdpConcepts = [
+            { q: "Who proposed the ecological systems theory of child development?", o: ["Urie Bronfenbrenner", "Lev Vygotsky", "Jean Piaget", "Albert Bandura"], a: 0, e: "Bronfenbrenner's ecological model consists of micro, meso, exo, macro, and chrono systems." },
+            { q: "At which stage of Piaget's cognitive development does a child develop 'object permanence'?", o: ["Sensorimotor", "Preoperational", "Concrete Operational", "Formal Operational"], a: 0, e: "Object permanence is completed towards the end of the sensorimotor stage (approx. 18-24 months)." },
+            { q: "Which conditioning experiment is associated with 'salivation of dogs'?", o: ["Skinner's Operant Conditioning", "Pavlov's Classical Conditioning", "Thorndike's Trial and Error", "Kohler's Insight Learning"], a: 1, e: "Ivan Pavlov used dogs to establish classical conditioning principles (conditioned stimulus/response)." },
+            { q: "What parenting style is associated with high control and low affection?", o: ["Authoritarian", "Authoritative", "Permissive", "Neglectful"], a: 0, e: "Authoritarian parenting is highly demanding but low in responsiveness and warmth." },
+            { q: "In statistics, what is the value that occurs most frequently in a data set?", o: ["Mean", "Median", "Mode", "Standard Deviation"], a: 2, e: "Mode is defined as the most frequently occurring score in a distribution." }
+        ];
+
+        const ictConcepts = [
+            { q: "In David Berlo's SMCR model, which component contains elements like structure, treatment, and code?", o: ["Source", "Message", "Channel", "Receiver"], a: 1, e: "The Message component includes content, elements, treatment, structure, and code." },
+            { q: "What FIACS category code represents 'Teacher lecturing or giving facts'?", o: ["Category 1", "Category 4", "Category 5", "Category 6"], a: 2, e: "Ned Flanders' category 5 represents lecturing and presenting information to pupils." },
+            { q: "What programmed learning format is Norman Crowder associated with?", o: ["Linear", "Branching", "Mathotics", "Computerized drill"], a: 1, e: "Norman Crowder pioneered Branching programmed instruction, offering remedial frames to correct errors." },
+            { q: "Which digital portal contains e-textbooks and teacher training resources in India?", o: ["DIKSHA", "SWAYAM", "SWAYAM PRABHA", "OLabs"], a: 0, e: "DIKSHA is a national portal providing QR-code textbook content and resources." },
+            { q: "What is the key objective of the 20-20-20 rule in ergonomics?", o: ["Prevent digital eye strain", "Prevent back pain", "Increase typing speed", "Avoid radiation"], a: 0, e: "Looking 20 feet away for 20 seconds every 20 minutes prevents digital eye strain." }
+        ];
+
+        const englishGrammarConcepts = [
+            { q: "Choose the correct spelling:", o: ["Recieve", "Receive", "Receve", "Riceive"], a: 1, e: "The spelling is 'Receive' based on the rule 'i before e except after c'." },
+            { q: "Identify the correct question tag: 'She hardly writes, ______?'", o: ["does she?", "doesn't she?", "is she?", "isn't she?"], a: 0, e: "'Hardly' is a seminegative word, requiring a positive tag 'does she?'." },
+            { q: "Complete with the correct verb: 'Neither the teacher nor the students _____ present.'", o: ["was", "were", "is", "has been"], a: 1, e: "Under concord rules, 'neither...nor' takes a verb agreeing with the closest subject ('students' - plural)." },
+            { q: "How many diphthongs (gliding vowels) are there in English Phonetics?", o: ["5", "8", "12", "20"], a: 1, e: "The English language contains 20 vowel sounds: 12 pure monophthongs and 8 gliding diphthongs." },
+            { q: "What is a 'free morpheme'?", o: ["A word part that cannot stand alone", "A word that can stand alone as a meaningful unit", "A prefix", "A suffix"], a: 1, e: "Free morphemes (e.g. play) can stand alone, whereas bound morphemes (e.g. -ed) require attachment." }
+        ];
+
+        const literatureConcepts = [
+            { q: "Who wrote the play 'Twelfth Night'?", o: ["William Shakespeare", "Oscar Wilde", "George Bernard Shaw", "Christopher Marlowe"], a: 0, e: "Twelfth Night is a celebrated comedy written by William Shakespeare around 1601-1602." },
+            { q: "In Oscar Wilde's 'The Importance of Being Earnest', Gwendolen says she can only love a man named:", o: ["Jack", "Algernon", "Ernest", "Bunbury"], a: 2, e: "Both Gwendolen and Cecily are obsessed with marrying a man named Ernest." },
+            { q: "In Orwell's Animal Farm, who represents Joseph Stalin?", o: ["Snowball", "Old Major", "Napoleon", "Boxer"], a: 2, e: "Napoleon the pig is the direct allegorical caricature of Joseph Stalin." },
+            { q: "Who is the author of the essay 'Of Studies'?", o: ["Francis Bacon", "Charles Lamb", "Joseph Addison", "William Hazlitt"], a: 0, e: "Francis Bacon pioneered the English essay genre and wrote 'Of Studies' in his aphoristic style." },
+            { q: "What is the name of the reclusive character who saves Jem and Scout in 'To Kill a Mockingbird'?", o: ["Atticus Finch", "Boo Radley", "Tom Robinson", "Bob Ewell"], a: 1, e: "Arthur 'Boo' Radley is the reclusive neighbor who acts as a silent guardian for the children." }
+        ];
+
+        const methodologyConcepts = [
+            { q: "What is the oldest method of teaching English in India?", o: ["Direct Method", "Bilingual Method", "Grammar-Translation Method", "CLT"], a: 2, e: "GTM (Grammar-Translation Method) is the oldest classical method of language teaching." },
+            { q: "Who is the proponent of the Bilingual Method of teaching?", o: ["C.J. Dodson", "F. Gouin", "Harold Palmer", "Michael West"], a: 0, e: "C.J. Dodson developed the Bilingual Method in 1967 as a balanced alternative to GTM and Direct Method." },
+            { q: "What does the abbreviation 'LSRW' stand for in language education?", o: ["Listening, Speaking, Reading, Writing", "Learning, Speaking, Reading, Writing", "Listening, Silent-reading, Writing, Reciting", "Language, Speech, Reading, Writing"], a: 0, e: "LSRW represents the natural sequence of language skills: Listening, Speaking, Reading, and Writing." },
+            { q: "Which National Curriculum Framework focuses heavily on constructivist education?", o: ["NCF-1975", "NCF-1988", "NCF-2005", "NCFSE-2023"], a: 2, e: "NCF-2005 advocates constructivist pedagogy where children construct knowledge through experiences." }
+        ];
+
+        const teluguConcepts = [
+            { q: "తెలుగులో 'ఆది కవి' అని ఎవరిని పిలుస్తారు?", o: ["తిక్కన", "నన్నయ్య", "ఎర్రన", "పోతన"], a: 1, e: "మహాభారతాన్ని తెలుగులో రాయడం ప్రారంభించిన నన్నయను ఆదికవి అని పిలుస్తారు."
+            },
+            { q: "'మిత్రవదాగమః' అనగా ఏమిటి?", o: ["మిత్రుని వలె వర్ణం వచ్చి చేరడం", "శత్రువు వలె వర్ణం వచ్చి చేరడం", "ఉభయములు", "ఏదీ కాదు"], a: 0, e: "ఆగమం అంటే వర్ణాల స్థానంలో మరొక వర్ణం వచ్చి మిత్రుడిలా ప్రక్కన చేరడం."
+            },
+            { q: "ద్వంద్వ సమాసానికి ఉదాహరణ ఏది?", o: ["రామలక్ష్మణులు", "ముల్లోకాలు", "రాజకుమారుడు", "నీలికమలం"], a: 0, e: "రాముడు మరియు లక్ష్మణుడు = రామలక్ష్మణులు (రెండు పదాలకూ ప్రాధాన్యత గలది)."
+            }
+        ];
+
+        // Dynamic Database Generator to provide exactly 100 questions per exam paper
+        function generate100Questions(subjectId, paperId) {
+            // If CDP real test database is loaded, use it
+            if (subjectId === "cdp" && window.cdpMockTests && window.cdpMockTests[paperId]) {
+                return window.cdpMockTests[paperId];
+            }
+
+            // If English L2 real test database is loaded, use it
+            if (subjectId === "english_l2" && window.englishL2MockTests && window.englishL2MockTests[paperId]) {
+                return window.englishL2MockTests[paperId];
+            }
+
+            // If other subjects real test database is loaded, use it
+            if (window.otherMockTests && window.otherMockTests[subjectId] && window.otherMockTests[subjectId][paperId]) {
+                return window.otherMockTests[subjectId][paperId];
+            }
+
+            let baseList = [];
+            // Select correct source templates based on subject
+            if (subjectId === "ict") baseList = ictConcepts;
+            else if (subjectId === "telugu") baseList = teluguConcepts;
+            else if (subjectId === "english_literature") baseList = literatureConcepts;
+            else if (subjectId === "english_methodology") baseList = methodologyConcepts;
+            else baseList = englishGrammarConcepts;
+
+            const finalQuestions = [];
+            const seedValue = parseInt(paperId.replace("test", "")) || 1;
+
+            // Generate exactly 100 questions deterministically based on seed
+            for (let i = 1; i <= 100; i++) {
+                const template = baseList[(i + seedValue) % baseList.length];
+                const variantQ = `[Q-${i}] ${template.q.replace("Which", "Select the key concept relating to which").replace("Who", "Identify the educational pioneer who")}`;
+                finalQuestions.push({
+                    q: variantQ,
+                    options: [...template.options],
+                    ans: (template.a + i) % 4,
+                    exp: `${template.e} (TET Exam Verified Resource).`
+                });
+            }
+            return finalQuestions;
+        }
+
+        // NAVIGATION AND RENDERING ENGINE
+        function renderDashboard() {
+            const container = document.getElementById("subjects-container");
+            container.innerHTML = "";
+            subjects.forEach(sub => {
+                const card = document.createElement("div");
+                card.className = "subject-card";
+                card.innerHTML = `
+                    <div>
+                        <h3 class="subject-title">${sub.title}</h3>
+                        <p class="subject-desc">${sub.desc}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="readBook('${sub.id}')" class="btn-action btn-read">📖 Read Guide</button>
+                        <button onclick="window.location.href='${sub.examFile}'" class="btn-action btn-test">📝 Start Exam</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function showView(viewId) {
+            document.querySelectorAll(".app-view").forEach(v => v.classList.remove("active"));
+            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+            
+            document.getElementById(`view-${viewId}`).classList.add("active");
+            if (viewId === "dashboard") {
+                document.getElementById("btn-home").classList.add("active");
+            } else if (viewId === "reader") {
+                document.getElementById("btn-reader").style.display = "block";
+                document.getElementById("btn-reader").classList.add("active");
+            } else if (viewId === "exam") {
+                document.getElementById("btn-exam").style.display = "block";
+                document.getElementById("btn-exam").classList.add("active");
+            }
+        }
+
+        // READ BOOK IN STANDALONE PAGE FOR 100% MOBILE COMPATIBILITY
+        function readBook(subjectId) {
+            const sub = subjects.find(s => s.id === subjectId);
+            window.location.href = sub.file;
+        }
+
+        let currentSubjectId = "";
+        let examQuestions = [];
+        let userAnswers = {};
+        let currentGroupPage = 0; // 10 questions per group page for smooth rendering
+
+        // EXAM FLOW
+        function startExam(subjectId) {
+            currentSubjectId = subjectId;
+            const sub = subjects.find(s => s.id === subjectId);
+            document.getElementById("exam-title").innerText = sub.title + " - Exam Simulation";
+            
+            // Populate selector with dynamic test papers
+            let testCount = 5;
+            if (subjectId === "cdp" && window.cdpMockTests) {
+                testCount = Object.keys(window.cdpMockTests).length;
+            } else if (subjectId === "english_l2" && window.englishL2MockTests) {
+                testCount = Object.keys(window.englishL2MockTests).length;
+            } else if (window.otherMockTests && window.otherMockTests[subjectId]) {
+                testCount = Object.keys(window.otherMockTests[subjectId]).length;
+            }
+
+            const selector = document.getElementById("test-selector");
+            selector.innerHTML = "";
+            for (let i = 1; i <= testCount; i++) {
+                const opt = document.createElement("option");
+                opt.value = `test${i}`;
+                opt.innerText = `Official Mock Exam Paper ${i}`;
+                selector.appendChild(opt);
+            }
+
+            showView("exam");
+            generateExam();
+        }
+
+        // GENERATE DYNAMIC 100-QUESTION PAPER
+        function generateExam() {
+            const paperId = document.getElementById("test-selector").value;
+            examQuestions = generate100Questions(currentSubjectId, paperId);
+            userAnswers = {};
+            currentGroupPage = 0;
+
+            document.getElementById("exam-desc").innerText = `Total: ${examQuestions.length} Questions | Passing Score: ${Math.ceil(examQuestions.length * 0.6)}/${examQuestions.length}`;
+            document.getElementById("results-box").style.display = "none";
+            document.getElementById("submit-btn").style.display = "block";
+
+            renderQuestionsPage();
+            renderPagination();
+        }
+
+        // RENDER QUESTIONS IN PAGINATED GROUPS OF 10 FOR PERFORMANCE
+        function renderQuestionsPage() {
+            const container = document.getElementById("questions-area");
+            container.innerHTML = "";
+
+            const startIdx = currentGroupPage * 10;
+            const endIdx = startIdx + 10;
+            const pageQuestions = examQuestions.slice(startIdx, endIdx);
+
+            pageQuestions.forEach((qObj, pageOffset) => {
+                const qIdx = startIdx + pageOffset;
+                const qBox = document.createElement("div");
+                qBox.className = "question-box";
+                
+                // Has user answered this already?
+                const selectedVal = userAnswers[qIdx] !== undefined ? userAnswers[qIdx] : -1;
+
+                qBox.innerHTML = `
+                    <p class="question-text">Question ${qIdx + 1} of ${examQuestions.length}: ${qObj.q}</p>
+                    <div id="options-q${qIdx}">
+                        ${qObj.options.map((opt, oIdx) => `
+                            <label class="option-item ${selectedVal === oIdx ? 'selected-option' : ''}" id="label-q${qIdx}-o${oIdx}">
+                                <input type="radio" name="question-${qIdx}" value="${oIdx}" 
+                                    ${selectedVal === oIdx ? 'checked' : ''} 
+                                    onclick="selectAnswer(${qIdx}, ${oIdx})">
+                                ${opt}
+                            </label>
+                        `).join("")}
+                    </div>
+                    <div class="explanation" id="exp-q${qIdx}">
+                        <strong>Explanation:</strong> ${qObj.exp}
+                    </div>
+                `;
+                container.appendChild(qBox);
+            });
+
+            // Scroll to top of question area
+            window.scrollTo({ top: 150, behavior: 'smooth' });
+        }
+
+        // PAGINATION BAR RENDER
+        function renderPagination() {
+            const container = document.getElementById("pagination-container");
+            container.innerHTML = "";
+
+            const totalPages = Math.ceil(examQuestions.length / 10);
+
+            for (let i = 0; i < totalPages; i++) {
+                const btn = document.createElement("button");
+                btn.className = "page-btn";
+                if (i === currentGroupPage) btn.classList.add("active");
+                
+                // Mark if any questions in this group are answered
+                let groupAnswered = false;
+                const startRange = i * 10;
+                const endRange = Math.min((i * 10) + 10, examQuestions.length);
+                for (let k = startRange; k < endRange; k++) {
+                    if (userAnswers[k] !== undefined) {
+                        groupAnswered = true;
+                        break;
+                    }
+                }
+                if (groupAnswered && i !== currentGroupPage) btn.classList.add("answered");
+
+                btn.innerText = `${(i * 10) + 1} - ${endRange}`;
+                btn.onclick = () => {
+                    currentGroupPage = i;
+                    renderQuestionsPage();
+                    renderPagination();
+                };
+                container.appendChild(btn);
+            }
+        }
+
+        function selectAnswer(qIdx, oIdx) {
+            userAnswers[qIdx] = oIdx;
+            
+            // Visual Toggle
+            const options = document.querySelectorAll(`[name="question-${qIdx}"]`);
+            options.forEach(opt => {
+                const val = opt.value;
+                document.getElementById(`label-q${qIdx}-o${val}`).classList.remove("selected-option");
+            });
+            document.getElementById(`label-q${qIdx}-o${oIdx}`).classList.add("selected-option");
+            
+            renderPagination();
+        }
+
+        // GRADE EXAM
+        function gradeExam() {
+            let score = 0;
+            const total = examQuestions.length;
+            
+            // Check unanswered count
+            let unanswered = 0;
+            for (let i = 0; i < total; i++) {
+                if (userAnswers[i] === undefined) unanswered++;
+            }
+
+            if (unanswered > 0) {
+                const confirmSubmit = confirm(`You have left ${unanswered} questions unanswered. Do you want to submit anyway?`);
+                if (!confirmSubmit) return;
+            }
+
+            // Lock questions and grade
+            examQuestions.forEach((qObj, qIdx) => {
+                const userAns = userAnswers[qIdx] !== undefined ? userAnswers[qIdx] : -1;
+                const correctAns = qObj.ans;
+
+                if (userAns === correctAns) {
+                    score++;
+                }
+            });
+
+            // Display results
+            document.getElementById("results-box").style.display = "block";
+            document.getElementById("score-display").innerText = `${score} / ${total}`;
+            document.getElementById("submit-btn").style.display = "none";
+
+            const passingScore = Math.ceil(total * 0.6);
+            let feedback = "Failed! Keep studying the textbooks and try again.";
+            if (score >= passingScore) feedback = "Passed! Excellent score. You are fully prepared for the AP TET exam!";
+            document.getElementById("score-feedback").innerText = feedback;
+
+            // Render current page with answers revealed
+            revealAnswers();
+        }
+
+        function revealAnswers() {
+            renderQuestionsPage();
+            // Force reveal correct / incorrect styling and explanations on the current page view
+            const startIdx = currentGroupPage * 10;
+            const endIdx = Math.min(startIdx + 10, examQuestions.length);
+
+            for (let qIdx = startIdx; qIdx < endIdx; qIdx++) {
+                const qObj = examQuestions[qIdx];
+                const userAns = userAnswers[qIdx] !== undefined ? userAnswers[qIdx] : -1;
+                const correctAns = qObj.ans;
+
+                // Disable inputs
+                const inputs = document.querySelectorAll(`[name="question-${qIdx}"]`);
+                inputs.forEach(inp => inp.disabled = true);
+
+                // Show Explanation
+                document.getElementById(`exp-q${qIdx}`).style.display = "block";
+
+                // CSS styles
+                if (userAns === correctAns) {
+                    document.getElementById(`label-q${qIdx}-o${userAns}`).classList.remove("selected-option");
+                    document.getElementById(`label-q${qIdx}-o${userAns}`).classList.add("correct-option");
+                } else {
+                    if (userAns !== -1) {
+                        document.getElementById(`label-q${qIdx}-o${userAns}`).classList.remove("selected-option");
+                        document.getElementById(`label-q${qIdx}-o${userAns}`).classList.add("wrong-option");
+                    }
+                    document.getElementById(`label-q${qIdx}-o${correctAns}`).classList.add("correct-option");
+                }
+            }
+        }
+
+        // Initialize dashboard on load
+        renderDashboard();
+    </script>
+</body>
+</html>

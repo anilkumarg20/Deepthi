@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Telugu Language I - Exam Hub</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-primary: #4f46e5;
+            --accent-light: #e0e7ff;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* Top Header Bar */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-back {
+            background: none;
+            border: none;
+            color: var(--accent-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e1b4b;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        /* Container styling */
+        .main-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 100px; /* space for sticky bottom bar */
+        }
+
+        /* Selector Card */
+        .selector-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .selector-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: #1e1b4b;
+        }
+
+        .selector-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-family: inherit;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-color);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-weight: 500;
+            outline: none;
+            transition: border-color 0.2s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%234f46e5' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            cursor: pointer;
+        }
+
+        .custom-select:focus {
+            border-color: var(--accent-primary);
+        }
+
+        /* Progress Header */
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-primary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Question Container (Card Slide layout) */
+        .question-wrapper {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+            display: none; /* controlled by JS */
+        }
+
+        .question-wrapper.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--accent-primary);
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
+
+        /* Options layout */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            position: relative;
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-item input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            outline: none;
+            accent-color: var(--accent-primary);
+        }
+
+        /* Interactive states */
+        .option-item:active {
+            transform: scale(0.98);
+        }
+
+        .option-item.selected {
+            border-color: var(--accent-primary);
+            background-color: var(--accent-light);
+            color: #1e1b4b;
+        }
+
+        /* Correct/Wrong revealing classes */
+        .option-item.correct {
+            border-color: var(--success);
+            background-color: var(--success-light);
+            color: #065f46;
+        }
+
+        .option-item.wrong {
+            border-color: var(--danger);
+            background-color: var(--danger-light);
+            color: #991b1b;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            margin-top: 20px;
+            padding: 16px;
+            background-color: var(--bg-primary);
+            border-left: 4px solid var(--accent-primary);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Results dashboard */
+        .results-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            display: none;
+        }
+
+        .results-card.active {
+            display: block;
+        }
+
+        .results-emoji {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .results-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            margin: 12px 0;
+        }
+
+        .results-feedback {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            padding: 0 10px;
+        }
+
+        .btn-restart {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent-primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Sticky bottom nav bar for mobile touch comfort */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            z-index: 90;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.03);
+        }
+
+        .btn-nav-action {
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-prev {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-next {
+            background-color: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-submit {
+            background-color: var(--success);
+            color: white;
+        }
+
+        /* Navigation Drawer/Sheet for quick jumping between questions on mobile */
+        .drawer-toggle {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .question-drawer {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            max-height: 70vh;
+            overflow-y: auto;
+            z-index: 101;
+            padding: 20px;
+            transition: bottom 0.3s ease;
+            box-shadow: 0 -8px 24px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .question-drawer.open {
+            bottom: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 100;
+            display: none;
+        }
+
+        .drawer-overlay.open {
+            display: block;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .drawer-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .drawer-dot {
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .drawer-dot.answered {
+            background-color: var(--accent-light);
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .drawer-dot.active {
+            background-color: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="btn-back">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back
+            </a>
+            <h1 class="header-title">Telugu Simulator</h1>
+            <button class="drawer-toggle" onclick="toggleDrawer()">📱</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+
+        <!-- Selector Card -->
+        <div class="selector-card" id="paper-selector-card">
+            <h3>Select Practice Exam</h3>
+            <p>Syllabus-verified Telugu Language I mock test papers.</p>
+            <select class="custom-select" id="test-selector" onchange="loadSelectedTest()">
+                <option value="test1">Official Mock Paper 1</option>
+                <option value="test2">Official Mock Paper 2</option>
+                <option value="test3">Official Mock Paper 3</option>
+                <option value="test4">Official Mock Paper 4</option>
+                <option value="test5">Official Mock Paper 5</option>
+            </select>
+        </div>
+
+        <!-- Progress Header -->
+        <div id="quiz-flow-container" style="display: none;">
+            <div class="progress-header">
+                <span id="question-index-label">Question 1 of 30</span>
+                <span id="passing-score-tag">Pass Target: 60%</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progress-bar"></div>
+            </div>
+
+            <!-- Quiz Questions Area -->
+            <div id="quiz-area"></div>
+        </div>
+
+        <!-- Results Card -->
+        <div class="results-card" id="results-card">
+            <div class="results-emoji" id="results-emoji">🎉</div>
+            <h3 class="results-title" id="results-title">Congratulations!</h3>
+            <div class="results-score" id="results-score">0 / 0</div>
+            <p class="results-feedback" id="results-feedback">You passed! Outstanding prep work for the AP TET Telugu exam.</p>
+            <button class="btn-restart" onclick="restartTest()">Try Again / Select Another</button>
+        </div>
+
+    </div>
+
+    <!-- Sticky Bottom Bar -->
+    <div class="bottom-nav" id="bottom-nav" style="display: none;">
+        <button class="btn-nav-action btn-prev" id="btn-prev" onclick="navigateQuestion(-1)">Previous</button>
+        <button class="btn-nav-action btn-next" id="btn-next" onclick="navigateQuestion(1)">Next</button>
+        <button class="btn-nav-action btn-submit" id="btn-submit" onclick="confirmSubmitQuiz()" style="display: none;">Submit</button>
+    </div>
+
+    <!-- Question Drawer & Overlay -->
+    <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer()"></div>
+    <div class="question-drawer" id="question-drawer">
+        <div class="drawer-header">
+            <h3 style="font-family: 'Outfit', sans-serif;">Question Navigator</h3>
+            <button class="drawer-toggle" onclick="toggleDrawer()">❌</button>
+        </div>
+        <div class="drawer-grid" id="drawer-grid"></div>
+    </div>
+
+    <!-- LOAD THE EXTERNAL JS FILE DIRECTLY -->
+    <script src="other_subjects_tests.js"></script>
+
+    <script>
+        const subjectId = "telugu";
+        let currentPaperId = "test1";
+        let activeQuestions = [];
+        let answers = {};
+        let activeQuestionIndex = 0;
+        let isSubmitted = false;
+
+        // Load chosen paper
+        function loadSelectedTest() {
+            currentPaperId = document.getElementById("test-selector").value;
+            activeQuestions = (window.otherMockTests && window.otherMockTests[subjectId] && window.otherMockTests[subjectId][currentPaperId]) || [];
+            answers = {};
+            activeQuestionIndex = 0;
+            isSubmitted = false;
+
+            document.getElementById("quiz-flow-container").style.display = "block";
+            document.getElementById("results-card").classList.remove("active");
+            document.getElementById("bottom-nav").style.display = "flex";
+
+            renderQuestion();
+            buildDrawer();
+        }
+
+        // Render current question card
+        function renderQuestion() {
+            const container = document.getElementById("quiz-area");
+            container.innerHTML = "";
+
+            if (activeQuestions.length === 0) {
+                container.innerHTML = "<p style='padding: 20px; text-align: center; color: red;'>Error loading questions. Please ensure other_subjects_tests.js is present.</p>";
+                return;
+            }
+
+            const qObj = activeQuestions[activeQuestionIndex];
+            const qBox = document.createElement("div");
+            qBox.className = "question-wrapper active";
+
+            const selectedVal = answers[activeQuestionIndex] !== undefined ? answers[activeQuestionIndex] : -1;
+
+            qBox.innerHTML = `
+                <div class="question-number">Question ${activeQuestionIndex + 1} of ${activeQuestions.length}</div>
+                <p class="question-text">${qObj.q}</p>
+                <div class="options-list">
+                    ${qObj.options.map((opt, idx) => {
+                        let extraClass = "";
+                        if (isSubmitted) {
+                            if (idx === qObj.ans) {
+                                extraClass = "correct";
+                            } else if (idx === selectedVal) {
+                                extraClass = "wrong";
+                            }
+                        } else if (idx === selectedVal) {
+                            extraClass = "selected";
+                        }
+
+                        return `
+                            <label class="option-item ${extraClass}">
+                                <input type="radio" name="option" value="${idx}" 
+                                    ${selectedVal === idx ? 'checked' : ''} 
+                                    ${isSubmitted ? 'disabled' : ''}
+                                    onclick="chooseOption(${idx})">
+                                ${opt}
+                            </label>
+                        `;
+                    }).join("")}
+                </div>
+                <div class="explanation-box" id="explanation" style="${isSubmitted ? 'display:block;' : 'display:none;'}">
+                    <strong>Explanation:</strong> ${qObj.exp}
+                </div>
+            `;
+            container.appendChild(qBox);
+
+            // Update Progress Bar
+            const progressPercent = ((activeQuestionIndex + 1) / activeQuestions.length) * 100;
+            document.getElementById("progress-bar").style.width = `${progressPercent}%`;
+            document.getElementById("question-index-label").innerText = `Question ${activeQuestionIndex + 1} of ${activeQuestions.length}`;
+            
+            const targetScore = Math.ceil(activeQuestions.length * 0.6);
+            document.getElementById("passing-score-tag").innerText = `Pass Target: ${targetScore}/${activeQuestions.length}`;
+
+            // Button Control
+            document.getElementById("btn-prev").disabled = activeQuestionIndex === 0;
+            
+            const nextBtn = document.getElementById("btn-next");
+            const submitBtn = document.getElementById("btn-submit");
+
+            if (activeQuestionIndex === activeQuestions.length - 1) {
+                nextBtn.style.display = "none";
+                submitBtn.style.display = isSubmitted ? "none" : "block";
+            } else {
+                nextBtn.style.display = "block";
+                submitBtn.style.display = "none";
+            }
+        }
+
+        // Navigate
+        function navigateQuestion(direction) {
+            const nextIdx = activeQuestionIndex + direction;
+            if (nextIdx >= 0 && nextIdx < activeQuestions.length) {
+                activeQuestionIndex = nextIdx;
+                renderQuestion();
+                updateDrawerSelection();
+            }
+        }
+
+        // Answer input
+        function chooseOption(optionIndex) {
+            if (isSubmitted) return;
+            answers[activeQuestionIndex] = optionIndex;
+            renderQuestion();
+            buildDrawer();
+        }
+
+        // Drawer logic
+        function toggleDrawer() {
+            document.getElementById("question-drawer").classList.toggle("open");
+            document.getElementById("drawer-overlay").classList.toggle("open");
+        }
+
+        function buildDrawer() {
+            const grid = document.getElementById("drawer-grid");
+            grid.innerHTML = "";
+
+            activeQuestions.forEach((_, idx) => {
+                const dot = document.createElement("div");
+                dot.className = "drawer-dot";
+                if (idx === activeQuestionIndex) dot.classList.add("active");
+                else if (answers[idx] !== undefined) dot.classList.add("answered");
+
+                dot.innerText = idx + 1;
+                dot.onclick = () => {
+                    activeQuestionIndex = idx;
+                    renderQuestion();
+                    toggleDrawer();
+                };
+                grid.appendChild(dot);
+            });
+        }
+
+        function updateDrawerSelection() {
+            const dots = document.querySelectorAll(".drawer-dot");
+            dots.forEach((dot, idx) => {
+                dot.classList.remove("active");
+                if (idx === activeQuestionIndex) dot.classList.add("active");
+            });
+        }
+
+        // Grade exam
+        function confirmSubmitQuiz() {
+            let unanswered = 0;
+            for (let i = 0; i < activeQuestions.length; i++) {
+                if (answers[i] === undefined) unanswered++;
+            }
+
+            if (unanswered > 0) {
+                const conf = confirm(`You have ${unanswered} unanswered questions. Submit anyway?`);
+                if (!conf) return;
+            }
+
+            isSubmitted = true;
+            gradeQuiz();
+        }
+
+        function gradeQuiz() {
+            let correctCount = 0;
+            activeQuestions.forEach((qObj, idx) => {
+                if (answers[idx] === qObj.ans) correctCount++;
+            });
+
+            // Hide questions & show results
+            document.getElementById("quiz-flow-container").style.display = "none";
+            document.getElementById("bottom-nav").style.display = "none";
+
+            const resultsCard = document.getElementById("results-card");
+            resultsCard.classList.add("active");
+
+            document.getElementById("results-score").innerText = `${correctCount} / ${activeQuestions.length}`;
+            
+            const pct = (correctCount / activeQuestions.length) * 100;
+            const emoji = document.getElementById("results-emoji");
+            const title = document.getElementById("results-title");
+            const feedback = document.getElementById("results-feedback");
+
+            const passingScore = Math.ceil(activeQuestions.length * 0.6);
+            if (correctCount >= passingScore) {
+                emoji.innerText = "🎉";
+                title.innerText = "Congratulations! Passed!";
+                feedback.innerText = `You scored ${pct.toFixed(0)}%. You successfully met the pass criteria of ${passingScore}/${activeQuestions.length}. Excellent preparation!`;
+            } else {
+                emoji.innerText = "📚";
+                title.innerText = "Practice Needed!";
+                feedback.innerText = `You scored ${pct.toFixed(0)}%. You need at least ${passingScore}/${activeQuestions.length} (60%) to pass. Please review the textbook and try again!`;
+            }
+        }
+
+        function restartTest() {
+            document.getElementById("results-card").classList.remove("active");
+            document.getElementById("quiz-flow-container").style.display = "none";
+            document.getElementById("bottom-nav").style.display = "none";
+            document.getElementById("paper-selector-card").style.display = "block";
+        }
+
+        // Initialize first paper safely after all resources ready
+        window.onload = function() {
+            loadSelectedTest();
+        };
+    </script>
+</body>
+</html>
